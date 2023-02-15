@@ -1,85 +1,81 @@
 package codadoor.pfe.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
-public class User {
+@Table(name="_user")
+public class User implements UserDetails{
   
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String username;
+	private String firstName;
+	private String lastName;
+	private String email;
 	private String password;
 	private String adress;
 	private String numTel;
 	private boolean active;
-	private String roles;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 	
 	
-	
-	public User() {};
-	
-	public Long getId() {
-		return id;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return List.of(new SimpleGrantedAuthority(role.name()));
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String email) {
-		this.username = username;
-	}
+	@Override
 	public String getPassword() {
+		// TODO Auto-generated method stub
 		return password;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return email;
 	}
-	public String getAdress() {
-		return adress;
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
 	}
-	public void setAdress(String adress) {
-		this.adress = adress;
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
 	}
-	public String getNumTel() {
-		return numTel;
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
 	}
-	public void setNumTel(String numTel) {
-		this.numTel = numTel;
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
-	public boolean isActive() {
-		return active;
-	}
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	public String getRoles() {
-		return roles;
-	}
-	public void setRoles(String roles) {
-		this.roles = roles;
-	}
-	public User(Long id, String username, String password, String adress, String numTel, boolean active, String roles) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.adress = adress;
-		this.numTel = numTel;
-		this.active = active;
-		this.roles = roles;
-	}
+	
 	
 	
 }

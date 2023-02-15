@@ -1,5 +1,7 @@
 package codadoor.pfe.entity;
 
-public class Admin {
+public enum Role {
 
+	USER,
+	ADMIN
 }
