@@ -1,6 +1,7 @@
 package codadoor.pfe.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,9 +20,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name="_user")
 public class User implements UserDetails{
@@ -39,6 +40,7 @@ public class User implements UserDetails{
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
+    
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -75,6 +77,10 @@ public class User implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	
+    
+	
 	
 	
 	
