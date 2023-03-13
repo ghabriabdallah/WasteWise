@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -18,29 +19,26 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-	private final JwtAuthentificationFilter jwtAuthentificationFilter;
-	private final AuthenticationProvider authenticationProvider;
+  private final JwtAuthenticationFilter jwtAuthFilter;
+  private final AuthenticationProvider authenticationProvider;
 
-	
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf()
+        .disable()
+        .authorizeHttpRequests()
+        .requestMatchers("/WasteWise/**")
+        .permitAll()
+        .anyRequest()
+        .authenticated()
+        .and()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .authenticationProvider(authenticationProvider)
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		
-		http
-		.csrf()
-		.disable()
-		.authorizeHttpRequests()
-		.requestMatchers("/WasteWise/auth/**")
-		.permitAll()
-		.anyRequest()
-		.authenticated()
-		.and()
-		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
-		.authenticationProvider(authenticationProvider)
-		.addFilterBefore(jwtAuthentificationFilter, UsernamePasswordAuthenticationFilter.class);
-		
-		return http.build();
-	}
+    return http.build();
+  }
 }

@@ -30,6 +30,8 @@ public class User implements UserDetails{
 	@Id
 	@GeneratedValue
 	private Long id;
+	@GeneratedValue
+	private Long UID;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -37,6 +39,7 @@ public class User implements UserDetails{
 	private String adress;
 	private String numTel;
 	private boolean active;
+	private boolean onDuty = false;
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
@@ -77,7 +80,7 @@ public class User implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
-
+	
 	
     
 	
