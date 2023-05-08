@@ -11,5 +11,8 @@ public interface UserService {
 	public  List<User>getAllUtilisateurs();
 	public void deleteUser(long id);
 	void changeDuty(Long id);
+    User updateUserById(Long id, User user);
+	User getUserByEmail(String email);
+	public User updatePhotoById(Long id, byte[] photo);
 
 }

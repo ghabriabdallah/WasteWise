@@ -37,28 +37,34 @@ public class Subscription {
     private String planName;
     private double price;
     private boolean paid;
-    private String visitDates; // Store visitDates as a string
+    private String visitDates;
+    
     @OneToOne
     private User user;
     
     public void setVisitDates(List<Date> visitDates) {
-        // Convert list of dates to a string
+        if (visitDates == null || visitDates.isEmpty()) {
+            this.visitDates = null;
+            return;
+        }
         StringBuilder sb = new StringBuilder();
         for (Date date : visitDates) {
             sb.append(date.toString()).append(",");
         }
-        this.visitDates = sb.toString();
+        this.visitDates = sb.substring(0, sb.length() - 1);
     }
+
     
     public List<Date> getVisitDates() {
-        // Convert string to list of dates
         List<Date> dates = new ArrayList<>();
-        if (visitDates != null && !visitDates.isEmpty()) {
-            String[] dateStrings = visitDates.split(",");
-            for (String dateString : dateStrings) {
-                dates.add(Date.valueOf(dateString));
-            }
+        if (visitDates == null || visitDates.isEmpty()) {
+            return dates;
+        }
+        String[] dateStrings = visitDates.split(",");
+        for (String dateString : dateStrings) {
+            dates.add(Date.valueOf(dateString));
         }
         return dates;
     }
+
 }
