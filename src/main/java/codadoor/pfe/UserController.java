@@ -63,12 +63,17 @@ public class UserController {
 		userService.deleteUser(id);
 	}
 	
+	@PutMapping(path = "/Admin/EditProfile/{id}")
+	@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = {"Content-Type"})
+	public void editProfile(@PathVariable Long id, @RequestBody User user) {
+	    userService.EditProfileById(id, user);
+	}
+
 	@PutMapping(path = "/Admin/UpdateUser/{id}")
 	@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = {"Content-Type"})
 	public void updateUser(@PathVariable Long id, @RequestBody User user) {
 	    userService.updateUserById(id, user);
 	}
-
 
 	@PutMapping(path = "/Admin/ChangeDuty/{id}")
 	@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = {"Content-Type"})

@@ -14,5 +14,6 @@ public interface UserService {
     User updateUserById(Long id, User user);
 	User getUserByEmail(String email);
 	public User updatePhotoById(Long id, byte[] photo);
+	User EditProfileById(Long id, User user);
 
 }

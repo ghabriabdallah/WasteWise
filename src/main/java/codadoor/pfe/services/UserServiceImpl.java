@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import codadoor.pfe.entity.Role;
 import codadoor.pfe.entity.User;
 import codadoor.pfe.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -89,6 +90,34 @@ public class UserServiceImpl implements UserService{
 	        throw new RuntimeException("User not found");
 	    }
 	}
+	@Override
+	public User EditProfileById(Long id, User user) {
+	    Optional<User> existingUserOptional = userRepository.findById(id);
+
+	    if (existingUserOptional.isPresent()) {
+	        User existingUser = existingUserOptional.get();
+	        existingUser.setFirstName(user.getFirstName());
+	        existingUser.setLastName(user.getLastName());
+	        existingUser.setEmail(user.getEmail());
+	        existingUser.setPassword(user.getPassword());
+	        existingUser.setAdress(user.getAdress());
+	        existingUser.setAdditionalAdress(user.getAdditionalAdress());
+	        existingUser.setPostalCode(user.getPostalCode());
+	        existingUser.setNumTel(user.getNumTel());
+	        
+	        existingUser.setRole(Role.USER);
+
+	        return userRepository.save(existingUser);
+	    } else {
+	        throw new RuntimeException("User not found");
+	    }
+	}
+
+
+
+
+
+
 
 
 }

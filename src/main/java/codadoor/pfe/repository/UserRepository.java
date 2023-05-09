@@ -20,4 +20,8 @@ public interface UserRepository extends JpaRepository<User, Long>{
     @Query("UPDATE User u SET u.firstName = :firstName, u.lastName = :lastName, u.email = :email, u.adress = :adress, u.numTel = :numTel, u.photo = :photo WHERE u.id = :id")
     void updateUser(@Param("id") Long id, @Param("firstName") String firstName, @Param("lastName") String lastName, @Param("email") String email, @Param("adress") String adress, @Param("numTel") String numTel, @Param("photo") byte[] photo);
 
+    @Modifying
+    @Query("UPDATE User u SET u.firstName = :firstName, u.lastName = :lastName, u.email = :email, u.adress = :adress, u.numTel = :numTel, u.photo = :photo WHERE u.id = :id")
+    void editProfile(@Param("id") Long id, @Param("firstName") String firstName, @Param("lastName") String lastName, @Param("email") String email, @Param("adress") String adress, @Param("numTel") String numTel, @Param("photo") byte[] photo);
+
 }
