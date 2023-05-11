@@ -1,7 +1,6 @@
 package codadoor.pfe.services;
 
 import codadoor.pfe.entity.Subscription;
-import codadoor.pfe.entity.User;
 
 public interface SubscriptionService {
     
