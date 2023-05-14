@@ -1,8 +1,11 @@
 package codadoor.pfe.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import codadoor.pfe.entity.Feedback;
 import codadoor.pfe.entity.Subscription;
 import codadoor.pfe.entity.User;
 import codadoor.pfe.repository.SubscriptionRepository;
@@ -23,6 +26,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return subscriptionRepository.findById(id).orElse(null);
     }
 
+    @Override
+	public List<Subscription> getAllSubscriptions() {
+		return subscriptionRepository.findAll();
+	}
 
     
 }

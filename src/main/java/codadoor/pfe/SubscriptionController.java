@@ -1,5 +1,7 @@
 package codadoor.pfe;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import codadoor.pfe.entity.Feedback;
 import codadoor.pfe.entity.Subscription;
 import codadoor.pfe.services.SubscriptionService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,12 @@ public class SubscriptionController {
     @Autowired
     private SubscriptionService subscriptionService;
 
+    @GetMapping(path ="AllSubscriptions") 
+	@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = {"Content-Type"})
+	public List<Subscription> getAllSubscriptions() {
+		return  subscriptionService.getAllSubscriptions();
+	}
+    
     @PostMapping("/subscription")
     public ResponseEntity<Subscription> saveSubscription(@RequestBody Subscription subscription) {
         Subscription savedSubscription = subscriptionService.saveSubscription(subscription);

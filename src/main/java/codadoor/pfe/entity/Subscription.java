@@ -12,6 +12,7 @@ import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -39,8 +40,10 @@ public class Subscription {
     private boolean paid;
     private String visitDates;
     
-    @OneToOne
-    private User user;
+   
+
+
+   
     
     public void setVisitDates(List<Date> visitDates) {
         if (visitDates == null || visitDates.isEmpty()) {
