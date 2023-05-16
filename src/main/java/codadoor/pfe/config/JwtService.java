@@ -16,6 +16,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
 import codadoor.pfe.entity.Role;
 
 @Service
@@ -50,8 +52,13 @@ public class JwtService {
 	    Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
 	    if (authorities.stream().anyMatch(a -> a.getAuthority().equals(Role.ADMIN.toString()))) {
 	        return generateToken(userDetails, Role.ADMIN);
-	    }
-	    return generateToken(userDetails, Role.USER);
+	    }else if (authorities.stream().anyMatch(a -> a.getAuthority().equals(Role.DRIVER.toString()))) {
+	        return generateToken(userDetails, Role.DRIVER);
+		}
+	    else {
+		    return generateToken(userDetails, Role.USER);
+
+		}
 	}
   public String generateADMINToken(UserDetails userDetails) {
 	    return generateToken(userDetails, Role.ADMIN);

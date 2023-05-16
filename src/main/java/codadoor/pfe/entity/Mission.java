@@ -1,8 +1,13 @@
 package codadoor.pfe.entity;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -17,19 +22,22 @@ public class Mission {
     @GeneratedValue
     private Long id;
 
-    private LocalDateTime pickupDate;
+    private String visitDates;
 
     private String pickupAddress;
-    private String addionalAddress;
-    private Number postalCode;
+    private String additionalAddress;
+    private Long postalCode;
     private String city;
     private String numTel;
+    
+    @Column(name = "mission_status")
+    private String missionStatus= "Not Started";
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subscription_id")
     private Subscription subscription;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "driver_id")
     private User driver;
 
@@ -40,14 +48,15 @@ public class Mission {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public LocalDateTime getPickupDate() {
-        return pickupDate;
+    public String getMissionStatus() {
+        return missionStatus;
     }
 
-    public void setPickupDate(LocalDateTime pickupDate) {
-        this.pickupDate = pickupDate;
+    public void setMissionStatus(String missionStatus) {
+        this.missionStatus = missionStatus;
     }
+
+   
 
     public String getPickupAddress() {
         return pickupAddress;
@@ -73,35 +82,69 @@ public class Mission {
         this.driver = driver;
     }
 
-	public String getAddionalAddress() {
-		return addionalAddress;
-	}
+    public String getAdditionalAddress() {
+        return additionalAddress;
+    }
 
-	public void setAddionalAddress(String addionalAddress) {
-		this.addionalAddress = addionalAddress;
-	}
+    public void setAdditionalAddress(String additionalAddress) {
+        this.additionalAddress = additionalAddress;
+    }
 
-	public Number getPostalCode() {
-		return postalCode;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setPostalCode(Number postalCode) {
-		this.postalCode = postalCode;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getNumTel() {
+        return numTel;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setNumTel(String numTel) {
+        this.numTel = numTel;
+    }
 
-	public String getNumTel() {
-		return numTel;
-	}
+    public Long getPostalCode() {
+        return postalCode;
+    }
 
-	public void setNumTel(String numTel) {
-		this.numTel = numTel;
-	}
+    public void setPostalCode(Long postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setDriverId(Long driverId) {
+        if (driverId != null) {
+            this.driver = new User();
+            this.driver.setId(driverId);
+        } else {
+            this.driver = null;
+        }
+    }
+
+    public void setVisitDates(List<Date> visitDates) {
+        if (visitDates == null || visitDates.isEmpty()) {
+            this.visitDates = null;
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Date date : visitDates) {
+            sb.append(date.toString()).append(",");
+        }
+        this.visitDates = sb.substring(0, sb.length() - 1);
+    }
+
+    
+    public List<Date> getVisitDates() {
+        List<Date> dates = new ArrayList<>();
+        if (visitDates == null || visitDates.isEmpty()) {
+            return dates;
+        }
+        String[] dateStrings = visitDates.split(",");
+        for (String dateString : dateStrings) {
+            dates.add(Date.valueOf(dateString));
+        }
+        return dates;
+    }
 }

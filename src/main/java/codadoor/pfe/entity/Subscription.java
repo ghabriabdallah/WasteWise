@@ -31,11 +31,12 @@ public class Subscription {
     private String lastName;
     private String email;
     private String address;
-    private String addionalAddress;
-    private Number postalCode;
+    private String additionalAddress;
+    private Long postalCode;
     private String city;
     private String numTel;
     private String planName;
+    private String clearanceType;
     private double price;
     private boolean paid;
     private String visitDates;
