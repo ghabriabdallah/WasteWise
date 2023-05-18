@@ -1,6 +1,10 @@
 package codadoor.pfe.services;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,5 +60,17 @@ public class MissionServiceImpl implements MissionService{
 	        .getResultList();
 	    }
 
+	    @Override
+	    public List<Mission> getTodayMissionsByDriverId(Long driverId) {
+	        List<Mission> allMissions = getMissionsByDriverId(driverId);
+	        LocalDate today = LocalDate.now();
 
+	        List<Mission> todayMissions = allMissions.stream()
+	                .filter(mission -> mission.getVisitDates().contains(Date.valueOf(today)))
+	                .collect(Collectors.toList());
+
+	        return todayMissions;
+	    }
 }
+
+

@@ -9,6 +9,7 @@ public interface MissionService {
     public Mission findMissionById(Long id);
 	List<Mission> getAllMissions();
 	List<Mission> getMissionsByDriverId(Long driverId);
+	List<Mission> getTodayMissionsByDriverId(Long driverId);
 	void updateMissionStatus(Long id, String missionStatus);
 	void deleteMission(long id);
 }

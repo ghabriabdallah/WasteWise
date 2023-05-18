@@ -1,5 +1,6 @@
 package codadoor.pfe;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,14 @@ public class MissionController {
     }
 
 
+    @GetMapping("/todayMissionsByDriver/{driverId}")
+    public ResponseEntity<List<Mission>> getTodayMissionsByDriverId(@PathVariable Long driverId) {
+        List<Mission> todayMissions = missionService.getTodayMissionsByDriverId(driverId);
+        if (todayMissions.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(todayMissions, HttpStatus.OK);
+        }
+    }
 
 }
